@@ -2,17 +2,12 @@ package net.kazakov.processingdemo;
 
 import processing.core.PApplet;
 
-public class Scene {
-    private final PApplet app;
+public class Scene extends BaseScene {
     private float circleX;
     private float circleY;
-    public boolean up;
-    public boolean down;
-    public boolean left;
-    public boolean right;
 
     public Scene(PApplet app) {
-        this.app = app;
+        super(app);
         circleX = app.width / 2f;
         circleY = app.height / 2f;
         app.textSize(16);
