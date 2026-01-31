@@ -17,12 +17,13 @@ public class Squares extends BaseScene {
             Colors.WHITE
     };
     private int colorIndex = 0;
+    private int N = 4;
     Point[] points;
 
     public Squares(PApplet app) {
         super(app);
         init();
-        app.background(0);
+        app.background(Colors.BLACK);
     }
 
     @Override
@@ -33,18 +34,34 @@ public class Squares extends BaseScene {
             colorIndex++;
         }
         colorIndex = (colorIndex + colors.length) % colors.length;
+
+        if(keyCode == PApplet.DOWN && N > 3) {
+            N--;
+            app.background(Colors.BLACK);
+        }
+        if (keyCode == PApplet.UP) {
+            N++;
+            app.background(Colors.BLACK);
+        }
+
         init();
         super.keyPressed(keyCode);
     }
 
     private void init() {
-        var size = this.app.height * 3 / 4;
-        points = new Point[] {
-                new Point(-size / 2.0, -size / 2.0),
-                new Point(size / 2.0, -size / 2.0),
-                new Point(size / 2.0, size / 2.0),
-                new Point(-size / 2.0, size / 2.0)
-        };
+
+        var phi0 = Math.PI * 3/ 2 - Math.PI / N;
+        var dPhi = Math.PI * 2 / N;
+        var h = -Math.sin(phi0);
+        var radius = app.height / 2.0 * 0.9;
+
+        points = new Point[N];
+        for (var i = 0; i < N; i++) {
+            var phi = phi0 + dPhi * i;
+            points[i] = new Point(radius*Math.cos(phi), radius *  Math.sin(phi));
+        }
+
+
         app.strokeWeight(3);
         app.stroke(colors[colorIndex]);
     }
